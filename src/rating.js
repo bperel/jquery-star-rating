@@ -28,6 +28,8 @@
                 .bind('hover.rating', $.fn.rating.hover)
                 .trigger('init.rating');
         });
+
+        return this;
     };
 
     $.extend($.fn.rating, {
@@ -40,7 +42,7 @@
                 l = children.length;
 
             for (; i < l; i++) {
-                list = list + '<a class="star" title="' + $(children[i]).val() + '" />';
+                list = list + '<a class="star" value="' + $(children[i]).val() + '" />';
                 if ($(children[i]).is(':checked')) {
                     isChecked = $(children[i]).val();
                 }
@@ -64,10 +66,7 @@
                 item.removeClass('fullStar');
 
                 input = item.filter(function(){
-                    if ($(this).attr('title') == val)
-                        return $(this);
-                    else
-                        return false;
+                    return $(this).attr('value') == val;
                 });
 
                 input
@@ -107,7 +106,7 @@
             var el = $(e.target),
                 container = el.parent().parent(),
                 inputs = container.children('input'),
-                rate = el.attr('title');
+                rate = el.attr('value');
 
             var matchInput = inputs.filter(function(){
                 return $(this).val() == rate;
